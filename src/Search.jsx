@@ -1,8 +1,16 @@
 import { useState } from 'react'
 
-export default function SearchBox() {
+export default function SearchBox({ setSearchResults }) {
 
   const [searchString, setSearchString] = useState('');
+
+  const clickHandler = () => {
+    // TODO - perform search with search string
+    console.log(searchString)
+
+    // TODO - update search results using search string
+    setSearchResults(searchString)
+  }
 
   return (
     <>
@@ -19,7 +27,7 @@ export default function SearchBox() {
             onChange={(e) => setSearchString(e.target.value)}
           />
         </div>
-        <button onClick={() => console.log(searchString)}>
+        <button onClick={clickHandler}>
           Go!
         </button>
       </div>
