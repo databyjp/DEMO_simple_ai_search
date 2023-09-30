@@ -1,4 +1,9 @@
+import { useState } from 'react'
+
 export default function SearchBox() {
+
+  const [searchString, setSearchString] = useState('');
+
   return (
     <>
       <div className="card">
@@ -11,9 +16,12 @@ export default function SearchBox() {
             defaultValue="Enter your search text here."
             rows={4}
             cols={40}
+            onChange={(e) => setSearchString(e.target.value)}
           />
         </div>
-        <button>Go!</button>
+        <button onClick={() => console.log(searchString)}>
+          Go!
+        </button>
       </div>
     </>
   )
