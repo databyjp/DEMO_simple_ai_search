@@ -4,6 +4,7 @@ import { useState } from 'react'
 // import './App.css'
 import SearchBox from './SearchBox.jsx'
 import SearchDisplay from './SearchDisplay'
+import ObjExplorer from './ObjExplorer'
 
 function App() {
 
@@ -84,7 +85,8 @@ function App() {
           <div class="col d-flex flex-column align-items-start gap-2">
             <h2 class="fw-bold text-body-emphasis">Weaviate objects</h2>
 
-            <p class="text-body-secondary">Search results go here:</p>
+            <p class="text-body-secondary">What's in the database?</p>
+            <ObjExplorer />
           </div>
         </div>
 
@@ -94,7 +96,6 @@ function App() {
           </div>
           <div class="card-body">
             <p class="card-text">Check out our <a href="https://weaviate.io/developers/weaviate/quickstart">documentation</a></p>
-
           </div>
         </div>
       </div>
