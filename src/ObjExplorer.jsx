@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import weaviate from 'weaviate-ts-client';
+import Card from './Card'
 
 export default function ObjExplorer() {
   const [data, setData] = useState(null);
@@ -18,12 +19,12 @@ export default function ObjExplorer() {
           .graphql
           .get()
           .withClassName('JeopardyQuestion')
-          .withFields('question')
-          .withLimit(5)
+          .withFields('question answer _additional { id }')
+          .withLimit(6)
           .do();
 
         console.log(result);
-        setData(result);
+        setData(result.data.Get.JeopardyQuestion);
       } catch (error) {
         console.error(error);
       }
@@ -35,8 +36,10 @@ export default function ObjExplorer() {
   return (
     <>
       <div>
-        "Hiya"
-        {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
+        {/* {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'} */}
+        <div class="row">
+        {data ? data.map(d => <Card title={d.answer} body={d.question} btn_body={d._additional.id} />) : 'Loading...'}
+        </div>
       </div>
     </>
   );

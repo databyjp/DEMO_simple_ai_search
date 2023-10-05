@@ -81,11 +81,11 @@ function App() {
           </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+        <div class="row align-items-md-center g-5 py-5">
           <div class="col d-flex flex-column align-items-start gap-2">
-            <h2 class="fw-bold text-body-emphasis">Weaviate objects</h2>
+            <h2 class="fw-bold text-body-emphasis">Database entries</h2>
 
-            <p class="text-body-secondary">What's in the database?</p>
+            <p class="text-body-secondary">A selection of <i>Jeopardy</i> entries in the database.</p>
             <ObjExplorer />
           </div>
         </div>
