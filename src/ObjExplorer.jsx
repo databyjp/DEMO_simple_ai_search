@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import weaviate from 'weaviate-ts-client';
-import Card from './Card'
+import ObjCard from './Card'
 
 export default function ObjExplorer() {
   const [data, setData] = useState(null);
@@ -38,7 +38,7 @@ export default function ObjExplorer() {
       <div>
         {/* {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'} */}
         <div class="row">
-        {data ? data.map(d => <Card title={d.answer} body={d.question} btn_body={d._additional.id} />) : 'Loading...'}
+        {data ? data.map(d => <ObjCard title={d.answer} body={d.question} uuid={d._additional.id} />) : 'Loading...'}
         </div>
       </div>
     </>
