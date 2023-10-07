@@ -16,16 +16,36 @@ function App() {
 
   return (
     <>
-      <div class="container px-4 pt-5">
-        <h2 class="pb-2 border-bottom">My first AI search app</h2>
-
-        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-2">
-          <div class="col d-flex flex-column align-items-start gap-2">
-            <h2 class="fw-bold text-body-emphasis">Perform a search</h2>
-            <SearchBox setSearchResults={setSearchResults} />
+      <div class="container my-5">
+        <div class="p-5 text-center bg-body-tertiary rounded-3">
+          <div class="container px-4 pt-5">
+            <h1 class="pb-2">My first AI search app</h1>
           </div>
+          <div class="row row-cols-1 align-items-md-center g-5 py-2">
+            <div class="col d-flex flex-column align-items-center gap-2">
+              <SearchBox setSearchResults={setSearchResults} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container px-4 pt-2">
+        <div class="row row-cols-1 align-items-md-center g-5 py-2">
+          <div class="col d-flex flex-column align-items-start gap-2">
+            <h2 class="pb-2">Search results</h2>
+            <SearchDisplay searchResults={searchResults} />
+          </div>
+        </div>
 
-          <div class="col">
+        <div class="row align-items-md-center g-5 py-5">
+          <div class="col d-flex flex-column align-items-start gap-2">
+            <h2 class="pb-2">Database entries</h2>
+            <p class="text-body-secondary">A selection of <i>Jeopardy</i> entries in the database.</p>
+            <ObjExplorer />
+          </div>
+        </div>
+
+        <div>
+        <div class="col">
             <div class="row row-cols-1 row-cols-sm-2 g-4">
               <div class="col d-flex flex-column gap-2">
                 <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
@@ -67,22 +87,6 @@ function App() {
                 <p class="text-body-secondary">Integrate language models to transform your.</p>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div class="row row-cols-1 align-items-md-center g-5 py-5">
-          <div class="col d-flex flex-column align-items-start gap-2">
-            <h2 class="fw-bold text-body-emphasis">Search results</h2>
-            <SearchDisplay searchResults={searchResults} />
-          </div>
-        </div>
-
-        <div class="row align-items-md-center g-5 py-5">
-          <div class="col d-flex flex-column align-items-start gap-2">
-            <h2 class="fw-bold text-body-emphasis">Database entries</h2>
-
-            <p class="text-body-secondary">A selection of <i>Jeopardy</i> entries in the database.</p>
-            <ObjExplorer />
           </div>
         </div>
 

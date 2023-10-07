@@ -44,15 +44,16 @@ export default function SearchBox({ setSearchResults }) {
   return (
     <>
 
-      <label for="exampleFormControlInput1" class="text-body-secondary">Try it out!</label>
-      <textarea
+      <label for="exampleFormControlInput1" class="text-body-secondary">What are you looking for?</label>
+      <input
+        type="text"
         class="form-control"
         name="Search"
         onChange={(e) => setSearchString([e.target.value])}
       />
       <div class="mb-5">
-        <button type="button" class="btn btn-primary btn-lg" onClick={clickHandler}>
-          Go!
+        <button type="button" class="btn btn-primary btn" onClick={clickHandler}>
+          Let's go!
         </button>
       </div>
     </>
