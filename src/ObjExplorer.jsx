@@ -37,7 +37,7 @@ export default function ObjExplorer() {
     <>
       <div>
         <div class="row">
-        {data ? data.map(d => <ObjCard title={d.answer} body={d.question} uuid={d._additional.id} />) : 'Loading...'}
+        {data ? data.map(d => <ObjCard key={d._additional.id} title={d.answer} body={d.question} uuid={d._additional.id} />) : 'Loading...'}
         </div>
       </div>
     </>

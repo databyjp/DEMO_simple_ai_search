@@ -13,7 +13,7 @@ export default function SearchDisplay({ searchResults }) {
     return (
       <>
         <div>
-          {searchResults.map(s => (<ObjCard title={s['answer']} body={s['question']} uuid={s['_additional']['uuid']} />))}
+          {searchResults.map(s => (<ObjCard key={s._additional.id} title={s.answer} body={s.question} uuid={s._additional.id} />))}
         </div>
       </>
     )

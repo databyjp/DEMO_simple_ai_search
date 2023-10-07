@@ -16,9 +16,8 @@ export default function SearchBox({ setSearchResults }) {
       .withClassName('JeopardyQuestion')
       .withBm25({
         query: queryString[0],
-        // query: 'napoleon',
       })
-      .withLimit(3)
+      .withLimit(5)
       .withFields('question answer _additional {id}')
       .do();
     console.log(result)

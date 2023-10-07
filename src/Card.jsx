@@ -1,5 +1,5 @@
 const ObjCard = ({title="", body="", uuid=""}) => {
-  const id_displayed = "ID: " + uuid.split("-")[0] + "..."
+  const id_displayed = "ID: " + uuid
   return (
     <>
       <div>
