@@ -8,9 +8,8 @@ const ObjCard = ({title="", body="", uuid=""}) => {
             <h5 class="card-title">{title}</h5>
             <span class="badge rounded-pill text-bg-light text-secondary">{id_displayed}</span>
             <p class="card-text">
-              {body}
+              {body} &nbsp;&nbsp;<span class="badge bg-secondary"><a href="#" class="text-white">Read more</a></span>
             </p>
-            <a href="#" class="btn btn-info btn-sm">See more</a>
           </div>
         </div>
       </div>

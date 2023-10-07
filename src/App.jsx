@@ -8,7 +8,7 @@ import ObjExplorer from './ObjExplorer'
 
 function App() {
 
-  const [searchResults, setSearchResults] = useState(Array(1).fill(null))
+  const [searchResults, setSearchResults] = useState([])
 
   const searchHandler = () => {
     console.log("Something")
@@ -73,8 +73,6 @@ function App() {
         <div class="row row-cols-1 align-items-md-center g-5 py-5">
           <div class="col d-flex flex-column align-items-start gap-2">
             <h2 class="fw-bold text-body-emphasis">Search results</h2>
-
-            <p class="text-body-secondary">Search results go here:</p>
             <SearchDisplay searchResults={searchResults} />
           </div>
         </div>

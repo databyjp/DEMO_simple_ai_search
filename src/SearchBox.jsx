@@ -45,7 +45,7 @@ export default function SearchBox({ setSearchResults }) {
   return (
     <>
 
-      <label for="exampleFormControlInput1" class="text-body-secondary">Try it!</label>
+      <label for="exampleFormControlInput1" class="text-body-secondary">Try it out!</label>
       <textarea
         class="form-control"
         name="Search"
