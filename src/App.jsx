@@ -33,8 +33,8 @@ function App() {
                     <use xlink:href="#collection" />
                   </svg>
                 </div>
-                <h4 class="fw-semibold mb-0 text-body-emphasis">Vector search</h4>
-                <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">Semantic search</h4>
+                <p class="text-body-secondary">Search objects by similarity.</p>
               </div>
 
               <div class="col d-flex flex-column gap-2">
@@ -44,7 +44,7 @@ function App() {
                   </svg>
                 </div>
                 <h4 class="fw-semibold mb-0 text-body-emphasis">Hybrid search</h4>
-                <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
+                <p class="text-body-secondary">Combine semantic search with keyword search.</p>
               </div>
 
               <div class="col d-flex flex-column gap-2">
@@ -54,7 +54,7 @@ function App() {
                   </svg>
                 </div>
                 <h4 class="fw-semibold mb-0 text-body-emphasis">Filters</h4>
-                <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
+                <p class="text-body-secondary">Restrict results based con a set of conditions.</p>
               </div>
 
               <div class="col d-flex flex-column gap-2">
@@ -64,13 +64,13 @@ function App() {
                   </svg>
                 </div>
                 <h4 class="fw-semibold mb-0 text-body-emphasis">LLM Integration</h4>
-                <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p>
+                <p class="text-body-secondary">Integrate language models to transform your.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+        <div class="row row-cols-1 align-items-md-center g-5 py-5">
           <div class="col d-flex flex-column align-items-start gap-2">
             <h2 class="fw-bold text-body-emphasis">Search results</h2>
 

@@ -2,15 +2,15 @@ const ObjCard = ({title="", body="", uuid=""}) => {
   const id_displayed = "ID: " + uuid.split("-")[0] + "..."
   return (
     <>
-      <div>
-        <div class="card my-2">
+      <div class="col-sm-4 mb-3 mb-sm-2">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">{title}</h5>
             <span class="badge rounded-pill text-bg-light text-secondary">{id_displayed}</span>
             <p class="card-text">
-              {body}
+              {body.length > 60 ? body.slice(0, 60) + "..." : body}
             </p>
-            <a href="#" class="btn btn-info btn-sm">See more</a>
+            <a href="#" class="btn btn-secondary btn-sm">See more</a>
           </div>
         </div>
       </div>
