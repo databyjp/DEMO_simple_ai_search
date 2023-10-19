@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ObjCard = ({title="", body="", uuid=""}) => {
+const QuestionCard = ({title="", body="", uuid="", category=""}) => {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const toggleAnswer = (e) => {
@@ -25,6 +25,9 @@ const ObjCard = ({title="", body="", uuid=""}) => {
         <div class="card my-2">
           <div class="card-body">
             <p class="card-text">
+              <p>
+                <small><span class="badge bg-secondary">{category}</span></small>
+              </p>
               {imageURL && <img src={imageURL} alt="Content visual representation" style={{ maxWidth: '100%' }} />}
               <p className="card-text">
                 {content}
@@ -34,10 +37,10 @@ const ObjCard = ({title="", body="", uuid=""}) => {
               showAnswer ? (
                 <>
                   <p><strong>{title}</strong></p>
-                  <span class="badge bg-secondary"><a href="#" class="text-white" onClick={toggleAnswer}>Hide the answer</a></span>
+                  <a href="#" onClick={toggleAnswer}>Hide the answer</a>
                 </>
               ) : (
-                <span class="badge bg-secondary"><a href="#" class="text-white" onClick={toggleAnswer}>See the answer</a></span>
+                <a href="#" onClick={toggleAnswer}>See the answer</a>
               )
             }
           </div>
@@ -47,4 +50,4 @@ const ObjCard = ({title="", body="", uuid=""}) => {
   )
 }
 
-export default ObjCard;
+export default QuestionCard;

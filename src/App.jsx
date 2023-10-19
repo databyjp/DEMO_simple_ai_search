@@ -29,7 +29,7 @@ function App() {
 
       <div class="container px-4 pt-2">
         <div class="row row-cols-1 align-items-md-center g-5 py-2">
-          <div class="col d-flex flex-column align-items-start gap-2">
+          <div class="col d-flex flex-column align-items-md-center gap-2">
             <h2 class="pb-2">Questions</h2>
             <SearchDisplay searchResults={searchResults} />
           </div>
