@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import weaviate from 'weaviate-ts-client';
 
-export default function SearchBox({ setSearchResults, setGenerativeResults }) {
+export default function SearchBox({ setSearchResults, setGenerativeResponse }) {
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchString, setSearchString] = useState('');
 
   async function connectToWeaviate() {
     // ===== Connect to the vector database (Weaviate instance) =====
@@ -26,7 +29,7 @@ export default function SearchBox({ setSearchResults, setGenerativeResults }) {
         query: queryString[0],
         properties: ['question']
       })
-      .withLimit(10)
+      .withLimit(5)
       .withFields('question answer _additional {id} hasCategory {... on JeopardyCategory {title} }')
       .do();
     console.log('BM25 results:');
@@ -35,7 +38,7 @@ export default function SearchBox({ setSearchResults, setGenerativeResults }) {
     return result;
   };
 
-  async function singlePromptGenerate(queryString) {
+  async function generatePromo(queryString) {
 
     const client = await connectToWeaviate();
 
@@ -47,29 +50,28 @@ export default function SearchBox({ setSearchResults, setGenerativeResults }) {
         concepts: [queryString[0]]
       })
       .withGenerate({
-        singlePrompt: "Re-write the following only using emojis: {question}"
+        groupedTask: "Write a tweet promoting playing this online trivia game, based on these results"
       })
-      .withLimit(2)
+      .withLimit(5)
       .withFields('question answer')
       .do();
 
     return result;
   };
 
-  const [searchString, setSearchString] = useState('');
+  const clickHandler = async () => {
 
-  const clickHandler = () => {
     console.log(`Search string: ${searchString}`);
-    let result = keywordSearch(searchString);
-    let genResult = singlePromptGenerate(searchString);
 
+    let result = keywordSearch(searchString);
     result.then(r => {
       setSearchResults(r.data.Get['JeopardyQuestion']);
     });
 
-    genResult.then(r => {
-      setGenerativeResults(r);
-    });
+    setIsLoading(true); // Set loading to true when starting the data fetching
+    let genResult = await generatePromo(searchString); // Await the promise
+    setGenerativeResponse(genResult);
+    setIsLoading(false);
   }
 
   return (

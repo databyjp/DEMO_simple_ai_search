@@ -2,11 +2,12 @@ import { useState } from 'react';
 import weaviateLogo from './assets/weaviate-logo-light-transparent-200.png';
 import SearchBox from './SearchBox.jsx';
 import SearchDisplay from './SearchDisplay';
+import GenerativeDisplay from './GenerativeDisplay';
 
 function App() {
 
   const [searchResults, setSearchResults] = useState(null);
-  const [generativeResults, setGenerativeResults] = useState(null);
+  const [generativeResponse, setGenerativeResponse] = useState(null);
 
   return (
     <>
@@ -19,7 +20,7 @@ function App() {
           </div>
           <div className="row row-cols-1 align-items-md-center g-5 pt-4 pb-2">
             <div className="col d-flex flex-column align-items-left gap-2">
-              <SearchBox setSearchResults={setSearchResults} setGenerativeResults={setGenerativeResults} />
+              <SearchBox setSearchResults={setSearchResults} setGenerativeResponse={setGenerativeResponse} />
             </div>
           </div>
         </div>
@@ -30,6 +31,15 @@ function App() {
           <div className="col d-flex flex-column align-items-md-center gap-2">
             <h2 className="pb-2">Questions</h2>
             <SearchDisplay searchResults={searchResults} />
+          </div>
+        </div>
+      </div>
+
+      <div className="container px-4 pt-2">
+        <div className="row row-cols-1 align-items-md-center g-5 py-2">
+          <div className="col d-flex flex-column align-items-md-center gap-2">
+            <h2 className="pb-2">Generated results</h2>
+            <GenerativeDisplay generativeResponse={generativeResponse} />
           </div>
         </div>
       </div>
