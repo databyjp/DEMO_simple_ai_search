@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import weaviate from 'weaviate-ts-client';
 
-export default function SearchBox({ setSearchResults, setGenerativeResponse, setGenerativeIsLoading }) {
+export default function SearchBox({
+  setSearchResults,
+  setGroupedGenerativeResponse,
+  setGroupedGenerativeIsLoading,
+  setSingleGenerativeResponse,
+  setSingleGenerativeIsLoading
+}) {
 
   const [searchString, setSearchString] = useState('');
 
@@ -39,6 +45,8 @@ export default function SearchBox({ setSearchResults, setGenerativeResponse, set
 
   async function generatePromo(queryString) {
 
+    setGroupedGenerativeIsLoading(true); // Set loading to true when starting the data fetching
+
     const client = await connectToWeaviate();
 
     // ===== Perform a query =====
@@ -57,6 +65,34 @@ export default function SearchBox({ setSearchResults, setGenerativeResponse, set
       .withFields('question answer')
       .do();
 
+    setGroupedGenerativeIsLoading(false);
+
+    return result;
+  };
+
+  async function generateSinglePrompt(queryString) {
+
+    setSingleGenerativeIsLoading(true); // Set loading to true when starting the data fetching
+
+    const client = await connectToWeaviate();
+
+    // ===== Perform a query =====
+    let result = await client.graphql
+      .get()
+      .withClassName('JeopardyQuestion')
+      .withBm25({
+        query: queryString[0],
+        properties: ['question']
+      })
+      .withGenerate({
+        singlePrompt: 'Translate the following into Korean: {question}',
+      })
+      .withLimit(5)
+      .withFields('question answer')
+      .do();
+
+    setSingleGenerativeIsLoading(false);
+
     return result;
   };
 
@@ -69,10 +105,16 @@ export default function SearchBox({ setSearchResults, setGenerativeResponse, set
       setSearchResults(r.data.Get['JeopardyQuestion']);
     });
 
-    setGenerativeIsLoading(true); // Set loading to true when starting the data fetching
-    let genResult = await generatePromo(searchString); // Await the promise
-    setGenerativeResponse(genResult);
-    setGenerativeIsLoading(false);
+
+    let groupedResult = generatePromo(searchString);
+    groupedResult.then(r => {
+      setGroupedGenerativeResponse(r);
+    });
+
+    let singleResult = generateSinglePrompt(searchString);
+    singleResult.then(r => {
+      setSingleGenerativeResponse(r);
+    });
   }
 
   return (

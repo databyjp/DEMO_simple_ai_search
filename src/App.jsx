@@ -2,13 +2,16 @@ import { useState } from 'react';
 import weaviateLogo from './assets/weaviate-logo-light-transparent-200.png';
 import SearchBox from './SearchBox.jsx';
 import SearchDisplay from './SearchDisplay';
-import GenerativeDisplay from './GenerativeDisplay';
+import GroupTaskGenerativeDisplay from './GroupTaskGenerativeDisplay';
+import SinglePromptGenerativeDisplay from './SinglePromptGenerativeDisplay';
 
 function App() {
 
   const [searchResults, setSearchResults] = useState(null);
-  const [generativeResponse, setGenerativeResponse] = useState(null);
-  const [generativeIsLoading, setGenerativeIsLoading] = useState(false);
+  const [groupedGenerativeResponse, setGroupedGenerativeResponse] = useState(null);
+  const [groupedGenerativeIsLoading, setGroupedGenerativeIsLoading] = useState(false);
+  const [singleGenerativeResponse, setSingleGenerativeResponse] = useState(null);
+  const [singleGenerativeIsLoading, setSingleGenerativeIsLoading] = useState(false);
 
   return (
     <>
@@ -23,8 +26,10 @@ function App() {
             <div className="col d-flex flex-column align-items-left gap-2">
               <SearchBox
                 setSearchResults={setSearchResults}
-                setGenerativeResponse={setGenerativeResponse}
-                setGenerativeIsLoading={setGenerativeIsLoading}
+                setGroupedGenerativeResponse={setGroupedGenerativeResponse}
+                setGroupedGenerativeIsLoading={setGroupedGenerativeIsLoading}
+                setSingleGenerativeResponse={setSingleGenerativeResponse}
+                setSingleGenerativeIsLoading={setSingleGenerativeIsLoading}
               />
             </div>
           </div>
@@ -32,10 +37,14 @@ function App() {
       </div>
 
       <div className="container px-4 pt-2">
-        <div className="row row-cols-1 align-items-md-center g-5 py-2">
+        <div className="row row-cols-2 align-items-md-center g-5 py-2">
           <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="pb-2">Questions</h2>
+            <h2 className="pb-2">Original questions</h2>
             <SearchDisplay searchResults={searchResults} />
+          </div>
+          <div className="col d-flex flex-column align-items-md-center gap-2">
+            <h2 className="pb-2">Tranformed</h2>
+            <SinglePromptGenerativeDisplay singleGenerativeResponse={singleGenerativeResponse} singleGenerativeIsLoading={singleGenerativeIsLoading} />
           </div>
         </div>
       </div>
@@ -44,7 +53,7 @@ function App() {
         <div className="row row-cols-1 align-items-md-center g-5 py-2">
           <div className="col d-flex flex-column align-items-md-center gap-2">
             <h2 className="pb-2">Generated outputs</h2>
-            <GenerativeDisplay generativeResponse={generativeResponse} generativeIsLoading={generativeIsLoading} />
+            <GroupTaskGenerativeDisplay groupedGenerativeResponse={groupedGenerativeResponse} groupedGenerativeIsLoading={groupedGenerativeIsLoading} />
           </div>
         </div>
       </div>
