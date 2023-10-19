@@ -1,4 +1,7 @@
 export default function GroupTaskGenerativeDisplay({ groupedGenerativeResponse, groupedGenerativeIsLoading }) {
+
+  let generatedText;
+
   if (groupedGenerativeIsLoading == false) {
     if (groupedGenerativeResponse == null) {
       return (
@@ -7,12 +10,17 @@ export default function GroupTaskGenerativeDisplay({ groupedGenerativeResponse, 
         </div>
       )
     } else {
-      const generatedText = groupedGenerativeResponse.data.Get['JeopardyQuestion'][0]['_additional']['generate']['groupedResult'];
+      if (groupedGenerativeResponse.data.Get['JeopardyQuestion'].length > 0) {
+        generatedText = groupedGenerativeResponse.data.Get['JeopardyQuestion'][0]['_additional']['generate']['groupedResult'];
+      } else {
+        generatedText = 'Sorry, nothing here.';
+      }
+
       return (
         <>
           <div className="card my-2">
             <div className="card-body">
-              <div className="card-text">
+              <div className="card-text" style={{ whiteSpace: 'pre-line' }}>
                 {generatedText}
               </div>
             </div>

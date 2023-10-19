@@ -10,6 +10,7 @@ export default function SearchBox({
 }) {
 
   const [searchString, setSearchString] = useState('');
+  const [generativePrompt, setGenerativePrompt] = useState('Write a tweet based on these results promoting playing an online trivia game at http://127.0.0.1:5173/');
 
   async function connectToWeaviate() {
     // ===== Connect to the vector database (Weaviate instance) =====
@@ -31,7 +32,7 @@ export default function SearchBox({
       .get()
       .withClassName('JeopardyQuestion')
       .withBm25({
-        query: queryString[0],
+        query: queryString,
         properties: ['question']
       })
       .withLimit(5)
@@ -54,11 +55,12 @@ export default function SearchBox({
       .get()
       .withClassName('JeopardyQuestion')
       .withBm25({
-        query: queryString[0],
+        query: queryString,
         properties: ['question']
       })
       .withGenerate({
-        groupedTask: 'Write a tweet promoting playing this online trivia game, based on these results',
+        // groupedTask: 'Write a tweet promoting playing this online trivia game, based on these results',
+        groupedTask: generativePrompt,
         groupedProperties: ['question']
       })
       .withLimit(5)
@@ -81,11 +83,11 @@ export default function SearchBox({
       .get()
       .withClassName('JeopardyQuestion')
       .withBm25({
-        query: queryString[0],
+        query: queryString,
         properties: ['question']
       })
       .withGenerate({
-        singlePrompt: 'Translate the following into Korean: {question}',
+        singlePrompt: 'Provide a hint for people answering: {question} where the right answer is {answer}',
       })
       .withLimit(5)
       .withFields('question answer')
@@ -124,7 +126,7 @@ export default function SearchBox({
         type="text"
         className="form-control"
         name="Search"
-        onChange={(e) => setSearchString([e.target.value])}
+        onChange={(e) => setSearchString(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -132,11 +134,22 @@ export default function SearchBox({
           }
         }}
       />
+
+      <label className="text-body-secondary text-align-left mt-4">And also, do this with the results...</label>
+      <input
+        type="text"
+        className="form-control"
+        name="GenerativeInput"
+        value={generativePrompt}
+        onChange={(e) => setGenerativePrompt(e.target.value)}
+      />
+
       <div className="mb-5">
         <button type="button" className="btn btn-primary btn" onClick={clickHandler}>
           Let's go!
         </button>
       </div>
+
       {/* Try AI search */}
       {/* Add a filter */}
       {/* Augment your data */}

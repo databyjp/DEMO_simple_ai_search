@@ -38,6 +38,7 @@ export default function SearchDisplay({ searchResults, singleGenerativeResponse,
               body={s.question}
               uuid={s._additional.id}
               category={s.hasCategory[0].title}
+              generatedIsLoading={singleGenerativeIsLoading}
               generated={genResponses ? genResponses[i] : null }
             />
           ))}

@@ -5,9 +5,7 @@ const GenDataCard = ({title="", body="", uuid="", category=""}) => {
         <div className="card my-2">
           <div className="card-body">
             <div className="card-text">
-              <p className="card-text">
-                {body}
-              </p>
+              {body}
             </div>
           </div>
         </div>

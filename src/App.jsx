@@ -3,7 +3,6 @@ import weaviateLogo from './assets/weaviate-logo-light-transparent-200.png';
 import SearchBox from './SearchBox.jsx';
 import SearchDisplay from './SearchDisplay';
 import GroupTaskGenerativeDisplay from './GroupTaskGenerativeDisplay';
-import SinglePromptGenerativeDisplay from './SinglePromptGenerativeDisplay';
 
 function App() {
 
@@ -48,7 +47,7 @@ function App() {
       <div className="container px-4 pt-4">
         <div className="row row-cols-1 align-items-md-center g-5 py-2">
           <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="pb-2">Grouped generative output</h2>
+            <h2 className="pb-2">Generative output</h2>
             <GroupTaskGenerativeDisplay groupedGenerativeResponse={groupedGenerativeResponse} groupedGenerativeIsLoading={groupedGenerativeIsLoading} />
           </div>
         </div>

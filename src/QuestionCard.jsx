@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const QuestionCard = ({title="", body="", uuid="", category="", generated=""}) => {
+const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoading, generated}) => {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const toggleAnswer = (e) => {
@@ -11,7 +11,7 @@ const QuestionCard = ({title="", body="", uuid="", category="", generated=""}) =
   let content = body;
   let imageURL = '';
 
-  if (body.includes('<a href=')) {
+  if (body.includes('(<a href=')) {
     const urlMatch = body.match(/<a href="([^"]*)" target="_blank">([^<]+)<\/a>/);
     if (urlMatch && urlMatch[1]) {
       imageURL = urlMatch[1];
@@ -19,11 +19,13 @@ const QuestionCard = ({title="", body="", uuid="", category="", generated=""}) =
     }
   }
 
+
+
   return (
     <>
       <div class="container">
-        <div class="row align-items-start">
-          <div class="col-lg-6">
+        <div class="row my-4 align-items-start">
+          <div class="col-md-6">
             <div>
               <div className="card my-2">
                 <div className="card-body">
@@ -50,17 +52,25 @@ const QuestionCard = ({title="", body="", uuid="", category="", generated=""}) =
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-md-6">
             <div>
               <div className="card my-2">
                 <div className="card-header">
-                Generated text:
+                AI-generated hint:
                 </div>
-                <div className="card-body">
-                  <div className="card-text">
-                    {generated}
-                  </div>
-                </div>
+                {
+                  generatedIsLoading ? (
+                    <div className="card-body">
+                      Loading...
+                    </div>
+                  ) : (
+                    <div className="card-body">
+                      <div className="card-text">
+                        {generated}
+                      </div>
+                    </div>
+                  )
+                }
               </div>
             </div>
           </div>
