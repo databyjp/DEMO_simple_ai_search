@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import weaviate from 'weaviate-ts-client';
-import ObjCard from './NarrowCard'
+import ObjCard from './ObjCard'
 
 export default function ObjExplorer() {
   const [data, setData] = useState(null);

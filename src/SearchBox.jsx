@@ -3,7 +3,9 @@ import weaviate from 'weaviate-ts-client';
 
 export default function SearchBox({ setSearchResults }) {
 
-  async function performSearch(queryString) {
+  async function keywordSearch(queryString) {
+
+    // ===== Connect to the vector database (Weaviate instance) =====
     const client = weaviate.client({
       scheme: 'https',
       host: 'edu-demo.weaviate.network',
@@ -11,6 +13,7 @@ export default function SearchBox({ setSearchResults }) {
       headers: { 'X-OpenAI-Api-Key': import.meta.env.REACT_APP_OPENAI_APIKEY },
     });
 
+    // ===== Perform a query =====
     let result = await client.graphql
       .get()
       .withClassName('JeopardyQuestion')
@@ -28,13 +31,8 @@ export default function SearchBox({ setSearchResults }) {
   const [searchString, setSearchString] = useState('');
 
   const clickHandler = () => {
-    // TODO - perform search with search string
     console.log(searchString)
-
-    // TODO - update search results using search string
-    // setSearchResults(searchString)
-
-    let result = performSearch(searchString);
+    let result = keywordSearch(searchString);
 
     result.then(r => {
       setSearchResults(r.data.Get['JeopardyQuestion'])
@@ -43,8 +41,7 @@ export default function SearchBox({ setSearchResults }) {
 
   return (
     <>
-
-      <label for="exampleFormControlInput1" class="text-body-secondary">What are you looking for?</label>
+      <label for="exampleFormControlInput1" class="text-body-secondary">Test your trivia knowledge about...</label>
       <input
         type="text"
         class="form-control"
@@ -56,6 +53,9 @@ export default function SearchBox({ setSearchResults }) {
           Let's go!
         </button>
       </div>
+      {/* Try AI search */}
+      {/* Add a filter */}
+      {/* Augment your data */}
     </>
   )
 }
