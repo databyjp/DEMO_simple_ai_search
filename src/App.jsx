@@ -8,6 +8,7 @@ function App() {
 
   const [searchResults, setSearchResults] = useState(null);
   const [generativeResponse, setGenerativeResponse] = useState(null);
+  const [generativeIsLoading, setGenerativeIsLoading] = useState(false);
 
   return (
     <>
@@ -20,7 +21,11 @@ function App() {
           </div>
           <div className="row row-cols-1 align-items-md-center g-5 pt-4 pb-2">
             <div className="col d-flex flex-column align-items-left gap-2">
-              <SearchBox setSearchResults={setSearchResults} setGenerativeResponse={setGenerativeResponse} />
+              <SearchBox
+                setSearchResults={setSearchResults}
+                setGenerativeResponse={setGenerativeResponse}
+                setGenerativeIsLoading={setGenerativeIsLoading}
+              />
             </div>
           </div>
         </div>
@@ -35,11 +40,11 @@ function App() {
         </div>
       </div>
 
-      <div className="container px-4 pt-2">
+      <div className="container px-4 pt-4">
         <div className="row row-cols-1 align-items-md-center g-5 py-2">
           <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="pb-2">Generated results</h2>
-            <GenerativeDisplay generativeResponse={generativeResponse} />
+            <h2 className="pb-2">Generated outputs</h2>
+            <GenerativeDisplay generativeResponse={generativeResponse} generativeIsLoading={generativeIsLoading} />
           </div>
         </div>
       </div>

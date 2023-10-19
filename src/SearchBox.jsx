@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import weaviate from 'weaviate-ts-client';
 
-export default function SearchBox({ setSearchResults, setGenerativeResponse }) {
+export default function SearchBox({ setSearchResults, setGenerativeResponse, setGenerativeIsLoading }) {
 
-  const [isLoading, setIsLoading] = useState(false);
   const [searchString, setSearchString] = useState('');
 
   async function connectToWeaviate() {
@@ -46,11 +45,13 @@ export default function SearchBox({ setSearchResults, setGenerativeResponse }) {
     let result = await client.graphql
       .get()
       .withClassName('JeopardyQuestion')
-      .withNearText({
-        concepts: [queryString[0]]
+      .withBm25({
+        query: queryString[0],
+        properties: ['question']
       })
       .withGenerate({
-        groupedTask: "Write a tweet promoting playing this online trivia game, based on these results"
+        groupedTask: 'Write a tweet promoting playing this online trivia game, based on these results',
+        groupedProperties: ['question']
       })
       .withLimit(5)
       .withFields('question answer')
@@ -68,10 +69,10 @@ export default function SearchBox({ setSearchResults, setGenerativeResponse }) {
       setSearchResults(r.data.Get['JeopardyQuestion']);
     });
 
-    setIsLoading(true); // Set loading to true when starting the data fetching
+    setGenerativeIsLoading(true); // Set loading to true when starting the data fetching
     let genResult = await generatePromo(searchString); // Await the promise
     setGenerativeResponse(genResult);
-    setIsLoading(false);
+    setGenerativeIsLoading(false);
   }
 
   return (
