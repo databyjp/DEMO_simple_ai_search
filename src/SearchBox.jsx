@@ -1,17 +1,22 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import weaviate from 'weaviate-ts-client';
 
-export default function SearchBox({ setSearchResults }) {
+export default function SearchBox({ setSearchResults, setGenerativeResults }) {
 
-  async function keywordSearch(queryString) {
-
+  async function connectToWeaviate() {
     // ===== Connect to the vector database (Weaviate instance) =====
-    const client = weaviate.client({
+    const client = await weaviate.client({
       scheme: 'https',
       host: 'edu-demo.weaviate.network',
       apiKey: new weaviate.ApiKey('learn-weaviate'),
-      headers: { 'X-OpenAI-Api-Key': import.meta.env.REACT_APP_OPENAI_APIKEY },
+      headers: { 'X-OpenAI-Api-Key': import.meta.env.VITE_OPENAI_APIKEY },
     });
+    return client
+  };
+
+  async function keywordSearch(queryString) {
+
+    const client = await connectToWeaviate();
 
     // ===== Perform a query =====
     let result = await client.graphql
@@ -24,20 +29,47 @@ export default function SearchBox({ setSearchResults }) {
       .withLimit(10)
       .withFields('question answer _additional {id} hasCategory {... on JeopardyCategory {title} }')
       .do();
-    console.log(result)
+    console.log('BM25 results:');
+    console.log(result);
 
     return result;
-  }
+  };
+
+  async function singlePromptGenerate(queryString) {
+
+    const client = await connectToWeaviate();
+
+    // ===== Perform a query =====
+    let result = await client.graphql
+      .get()
+      .withClassName('JeopardyQuestion')
+      .withNearText({
+        concepts: [queryString[0]]
+      })
+      .withGenerate({
+        singlePrompt: "Re-write the following only using emojis: {question}"
+      })
+      .withLimit(2)
+      .withFields('question answer')
+      .do();
+
+    return result;
+  };
 
   const [searchString, setSearchString] = useState('');
 
   const clickHandler = () => {
-    console.log(searchString)
+    console.log(`Search string: ${searchString}`);
     let result = keywordSearch(searchString);
+    let genResult = singlePromptGenerate(searchString);
 
     result.then(r => {
-      setSearchResults(r.data.Get['JeopardyQuestion'])
-    })
+      setSearchResults(r.data.Get['JeopardyQuestion']);
+    });
+
+    genResult.then(r => {
+      setGenerativeResults(r);
+    });
   }
 
   return (

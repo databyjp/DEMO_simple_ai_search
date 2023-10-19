@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import weaviateLogo from './assets/weaviate-logo-light-transparent-200.png'
-import SearchBox from './SearchBox.jsx'
-import SearchDisplay from './SearchDisplay'
+import { useState } from 'react';
+import weaviateLogo from './assets/weaviate-logo-light-transparent-200.png';
+import SearchBox from './SearchBox.jsx';
+import SearchDisplay from './SearchDisplay';
 
 function App() {
 
-  const [searchResults, setSearchResults] = useState(null)
+  const [searchResults, setSearchResults] = useState(null);
+  const [generativeResults, setGenerativeResults] = useState(null);
 
   return (
     <>
@@ -13,12 +14,12 @@ function App() {
         <div className="p-5 text-center bg-body-tertiary rounded-3">
           <div className="container px-4 pt-5">
             <img src={weaviateLogo} width="80px"></img>
-            <h1 className="pb-2">Quizmaster 5000</h1>
-            <h4 className="text-secondary">Test your knowledge!</h4>
+            <h1 className="pb-2">QuizBuddAI</h1>
+            <h4 className="text-secondary">Test your trivia knowledge with a 🤖 friend.</h4>
           </div>
           <div className="row row-cols-1 align-items-md-center g-5 pt-4 pb-2">
             <div className="col d-flex flex-column align-items-left gap-2">
-              <SearchBox setSearchResults={setSearchResults} />
+              <SearchBox setSearchResults={setSearchResults} setGenerativeResults={setGenerativeResults} />
             </div>
           </div>
         </div>

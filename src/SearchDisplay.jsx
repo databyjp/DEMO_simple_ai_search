@@ -1,4 +1,4 @@
-import QuestionCard from './QuestionCard'
+import QuestionCard from './QuestionCard';
 
 export default function SearchDisplay({ searchResults }) {
   if (searchResults == null) {
@@ -25,5 +25,5 @@ export default function SearchDisplay({ searchResults }) {
         </div>
       </>
     )
-  }
+  };
 }
