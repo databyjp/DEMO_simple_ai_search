@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const QuestionCard = ({title="", body="", uuid="", category=""}) => {
+const QuestionCard = ({title="", body="", uuid="", category="", generated=""}) => {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const toggleAnswer = (e) => {
@@ -21,28 +21,48 @@ const QuestionCard = ({title="", body="", uuid="", category=""}) => {
 
   return (
     <>
-      <div>
-        <div className="card my-2">
-          <div className="card-body">
-            <div className="card-text">
-              <p>
-                <small><span className="badge bg-secondary">{category}</span></small>
-              </p>
-              {imageURL && <img src={imageURL} alt="Content visual representation" style={{ maxWidth: '100%' }} />}
-              <p className="card-text">
-                {content}
-              </p>
+      <div class="container">
+        <div class="row align-items-start">
+          <div class="col-lg-6">
+            <div>
+              <div className="card my-2">
+                <div className="card-body">
+                  <div className="card-text">
+                    <p>
+                      <small><span className="badge bg-secondary">{category}</span></small>
+                    </p>
+                    {imageURL && <img src={imageURL} alt="Content visual representation" style={{ maxWidth: '100%' }} />}
+                    <p className="card-text">
+                      {content}
+                    </p>
+                  </div>
+                  {
+                    showAnswer ? (
+                      <>
+                        <p><strong>{title}</strong></p>
+                        <a href="#" onClick={toggleAnswer}>Hide the answer</a>
+                      </>
+                    ) : (
+                      <a href="#" onClick={toggleAnswer}>See the answer</a>
+                    )
+                  }
+                </div>
+              </div>
             </div>
-            {
-              showAnswer ? (
-                <>
-                  <p><strong>{title}</strong></p>
-                  <a href="#" onClick={toggleAnswer}>Hide the answer</a>
-                </>
-              ) : (
-                <a href="#" onClick={toggleAnswer}>See the answer</a>
-              )
-            }
+          </div>
+          <div class="col-lg-6">
+            <div>
+              <div className="card my-2">
+                <div className="card-header">
+                Generated text:
+                </div>
+                <div className="card-body">
+                  <div className="card-text">
+                    {generated}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

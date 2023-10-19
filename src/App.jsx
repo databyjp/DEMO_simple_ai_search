@@ -37,14 +37,10 @@ function App() {
       </div>
 
       <div className="container px-4 pt-2">
-        <div className="row row-cols-2 align-items-md-center g-5 py-2">
+        <div className="row row-cols-1 align-items-md-center g-5 py-2">
           <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="pb-2">Original questions</h2>
-            <SearchDisplay searchResults={searchResults} />
-          </div>
-          <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="pb-2">Tranformed</h2>
-            <SinglePromptGenerativeDisplay singleGenerativeResponse={singleGenerativeResponse} singleGenerativeIsLoading={singleGenerativeIsLoading} />
+            <h2 className="pb-2">Results</h2>
+            <SearchDisplay searchResults={searchResults} singleGenerativeResponse={singleGenerativeResponse} singleGenerativeIsLoading={singleGenerativeIsLoading} />
           </div>
         </div>
       </div>
@@ -52,7 +48,7 @@ function App() {
       <div className="container px-4 pt-4">
         <div className="row row-cols-1 align-items-md-center g-5 py-2">
           <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="pb-2">Generated outputs</h2>
+            <h2 className="pb-2">Grouped generative output</h2>
             <GroupTaskGenerativeDisplay groupedGenerativeResponse={groupedGenerativeResponse} groupedGenerativeIsLoading={groupedGenerativeIsLoading} />
           </div>
         </div>
