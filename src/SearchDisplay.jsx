@@ -1,11 +1,19 @@
 import QuestionCard from './QuestionCard'
 
 export default function SearchDisplay({ searchResults }) {
-  if (searchResults == null | searchResults.length == 0) {
+  if (searchResults == null) {
     return (
       <>
         <div className='border-secondary-subtle-2'>
-          Nothing to see here... try entering something else in the search box.
+          Try entering something in the search box!
+        </div>
+      </>
+    )
+  } else if (searchResults.length == 0) {
+    return (
+      <>
+        <div className='border-secondary-subtle-2'>
+          No results found :(
         </div>
       </>
     )

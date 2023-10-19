@@ -5,48 +5,45 @@ import SearchDisplay from './SearchDisplay'
 
 function App() {
 
-  const [searchResults, setSearchResults] = useState([])
-
-  const searchHandler = () => {
-    console.log("Something")
-  }
+  const [searchResults, setSearchResults] = useState(null)
 
   return (
     <>
-      <div class="container my-5">
-        <div class="p-5 text-center bg-body-tertiary rounded-3">
-          <div class="container px-4 pt-5">
+      <div className="container my-5">
+        <div className="p-5 text-center bg-body-tertiary rounded-3">
+          <div className="container px-4 pt-5">
             <img src={weaviateLogo} width="80px"></img>
-            <h1 class="pb-2">Quizmaster 5000</h1>
+            <h1 className="pb-2">Quizmaster 5000</h1>
+            <h4 className="text-secondary">Test your knowledge!</h4>
           </div>
-          <div class="row row-cols-1 align-items-md-center g-5 py-2">
-            <div class="col d-flex flex-column align-items-center gap-2">
+          <div className="row row-cols-1 align-items-md-center g-5 pt-4 pb-2">
+            <div className="col d-flex flex-column align-items-left gap-2">
               <SearchBox setSearchResults={setSearchResults} />
             </div>
           </div>
         </div>
       </div>
 
-      <div class="container px-4 pt-2">
-        <div class="row row-cols-1 align-items-md-center g-5 py-2">
-          <div class="col d-flex flex-column align-items-md-center gap-2">
-            <h2 class="pb-2">Questions</h2>
+      <div className="container px-4 pt-2">
+        <div className="row row-cols-1 align-items-md-center g-5 py-2">
+          <div className="col d-flex flex-column align-items-md-center gap-2">
+            <h2 className="pb-2">Questions</h2>
             <SearchDisplay searchResults={searchResults} />
           </div>
         </div>
       </div>
 
-      <div class="container px-4 pt-2">
-        <div class="card mt-5 mb-2">
-          <div class="card-header">
-            Want to learn more?
+      <div className="container px-4 pt-2">
+        <div className="card mt-5 mb-2">
+          <div className="card-header">
+            Built with Weaviate <img src={weaviateLogo} width="30px" style={{ marginTop: '-5px' }}></img>
           </div>
-          <div class="card-body">
-            <p class="card-text">Check out the <a href="https://weaviate.io/developers/weaviate/quickstart">Weaviate documentation</a></p>
+          <div className="card-body">
+            <p className="card-text">Want to learn how? Check out the <a href="https://weaviate.io/developers/weaviate/quickstart">Weaviate documentation</a></p>
           </div>
         </div>
       </div>
-      <div class="container px-4">
+      <div className="container px-4 pb-5">
         <small>
           Original questions from TV show <i>Jeopardy!</i>. Dataset from <a href="https://www.kaggle.com/datasets/tunguz/200000-jeopardy-questions">Kaggle</a>.
         </small>

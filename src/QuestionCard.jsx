@@ -22,17 +22,17 @@ const QuestionCard = ({title="", body="", uuid="", category=""}) => {
   return (
     <>
       <div>
-        <div class="card my-2">
-          <div class="card-body">
-            <p class="card-text">
+        <div className="card my-2">
+          <div className="card-body">
+            <div className="card-text">
               <p>
-                <small><span class="badge bg-secondary">{category}</span></small>
+                <small><span className="badge bg-secondary">{category}</span></small>
               </p>
               {imageURL && <img src={imageURL} alt="Content visual representation" style={{ maxWidth: '100%' }} />}
               <p className="card-text">
                 {content}
               </p>
-            </p>
+            </div>
             {
               showAnswer ? (
                 <>

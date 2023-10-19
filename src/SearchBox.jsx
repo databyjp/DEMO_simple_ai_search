@@ -21,7 +21,7 @@ export default function SearchBox({ setSearchResults }) {
         query: queryString[0],
         properties: ['question']
       })
-      .withLimit(5)
+      .withLimit(10)
       .withFields('question answer _additional {id} hasCategory {... on JeopardyCategory {title} }')
       .do();
     console.log(result)
@@ -42,15 +42,21 @@ export default function SearchBox({ setSearchResults }) {
 
   return (
     <>
-      <label for="exampleFormControlInput1" class="text-body-secondary">Test your trivia knowledge about...</label>
+      <label className="text-body-secondary text-align-left">Find questions containing...</label>
       <input
         type="text"
-        class="form-control"
+        className="form-control"
         name="Search"
         onChange={(e) => setSearchString([e.target.value])}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            clickHandler();
+          }
+        }}
       />
-      <div class="mb-5">
-        <button type="button" class="btn btn-primary btn" onClick={clickHandler}>
+      <div className="mb-5">
+        <button type="button" className="btn btn-primary btn" onClick={clickHandler}>
           Let's go!
         </button>
       </div>
