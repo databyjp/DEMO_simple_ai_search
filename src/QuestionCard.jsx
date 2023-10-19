@@ -21,11 +21,11 @@ const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoadi
   }
 
   const options = {
-    replace: ({ attribs, children }) => {
+    replace: ({ attribs }) => {
       if (!attribs) return;
 
       if (attribs.href) {
-        return <img src={attribs.href} width='50%' alt={`Jeopardy image at: ${attribs.href}`} />;
+        return <img src={attribs.href} width='50%' alt={` (Jeopardy image at: ${attribs.href}) `} />;
       }
     },
   };
