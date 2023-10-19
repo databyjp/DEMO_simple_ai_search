@@ -37,7 +37,7 @@ function App() {
       </div>
 
       <div class="container px-4 pt-2">
-        <div class="card my-5">
+        <div class="card mt-5 mb-2">
           <div class="card-header">
             Want to learn more?
           </div>
@@ -45,6 +45,11 @@ function App() {
             <p class="card-text">Check out the <a href="https://weaviate.io/developers/weaviate/quickstart">Weaviate documentation</a></p>
           </div>
         </div>
+      </div>
+      <div class="container px-4">
+        <small>
+          Original questions from TV show <i>Jeopardy!</i>. Dataset from <a href="https://www.kaggle.com/datasets/tunguz/200000-jeopardy-questions">Kaggle</a>.
+        </small>
       </div>
     </>
   )
