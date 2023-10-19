@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import parse, { domToReact } from 'html-react-parser';
 
 const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoading, generated}) => {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -19,7 +20,15 @@ const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoadi
     }
   }
 
+  const options = {
+    replace: ({ attribs, children }) => {
+      if (!attribs) return;
 
+      if (attribs.href) {
+        return <img src={attribs.href} width='50%' alt={`Jeopardy image at: ${attribs.href}`} />;
+      }
+    },
+  };
 
   return (
     <>
@@ -35,7 +44,7 @@ const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoadi
                     </p>
                     {imageURL && <img src={imageURL} alt="Content visual representation" style={{ maxWidth: '100%' }} />}
                     <p className="card-text">
-                      {content}
+                      {parse(content, options)}
                     </p>
                   </div>
                   {
