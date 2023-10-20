@@ -90,7 +90,7 @@ export default function SearchBox({
   const clickHandler = async () => {
     let result = mainSearch(searchString);
     result.then((r) => {
-      setSearchResults(r.data.Get["JeopardyQuestion"]);
+      setSearchResults(r.data.Get.JeopardyQuestion);
     });
 
     let groupedResult = generateGroupedTask(searchString);

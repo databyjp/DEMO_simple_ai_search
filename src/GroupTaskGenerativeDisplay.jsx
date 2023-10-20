@@ -10,11 +10,10 @@ export default function GroupTaskGenerativeDisplay({
     if (groupedGenerativeResponse == null) {
       return <div>Nothing to see here</div>;
     } else {
-      if (groupedGenerativeResponse.data.Get["JeopardyQuestion"].length > 0) {
+      if (groupedGenerativeResponse.data.Get.JeopardyQuestion.length > 0) {
         generatedText =
-          groupedGenerativeResponse.data.Get["JeopardyQuestion"][0][
-            "_additional"
-          ]["generate"]["groupedResult"];
+          groupedGenerativeResponse.data.Get.JeopardyQuestion[0]._additional
+            .generate.groupedResult;
         try {
           generatedText = JSON.parse(generatedText);
         } catch (error) {
