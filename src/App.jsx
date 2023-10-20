@@ -30,7 +30,7 @@ function App() {
             <h4 className="text-secondary">Test your trivia knowledge with a 🤖 friend.</h4>
           </div>
           <div className="row row-cols-1 align-items-md-center g-5 pt-4 pb-2">
-            <div className="col d-flex flex-column align-items-left gap-2">
+            <div className="col d-flex flex-column align-items-left gap-2" style={{ paddingLeft: '20%', paddingRight: '20%' }}>
               <SearchBox
                 setSearchResults={setSearchResults}
                 setGroupedGenerativeResponse={setGroupedGenerativeResponse}
@@ -66,6 +66,9 @@ function App() {
           <div className="card-header">
             Built with Weaviate <img src={weaviateLogo} width="30px" style={{ marginTop: '-5px' }}></img>
           </div>
+          {/* <div className="card-body">
+            <p className="card-text">Want to learn how? Check out the <a href="https://weaviate.io/developers/weaviate/quickstart">Weaviate documentation</a></p>
+          </div> */}
         </div>
       </div>
       <div className="container px-4 pb-5">

@@ -38,11 +38,11 @@ const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoadi
             <div className="card-body">
               <div className="card-text">
                 <p>
-                  <small><span className="badge bg-secondary">{category}</span></small>
+                  <small>Category: <span className="badge bg-secondary">{category}</span></small>
                 </p>
                 {imageURL && <img src={imageURL} alt="Content visual representation" style={{ maxWidth: '100%' }} />}
                 <p className="card-text">
-                  {parse(content, options)}
+                  Question: {parse(content, options)}
                 </p>
               </div>
               {
