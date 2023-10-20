@@ -49,7 +49,7 @@ const QuestionCard = ({
   return (
     <>
       <div className="row my-4 align-items-start">
-        <div className="col-md-6">
+        <div className={`col-md-${generated ? 6 : 12}`}>
           <div className="card my-2">
             <div className="card-body">
               <div className="card-text">
@@ -85,18 +85,23 @@ const QuestionCard = ({
             </div>
           </div>
         </div>
-        <div className="col-md-6">
-          <div className="card my-2">
-            <div className="card-header">AI-generated hint:</div>
-            {generatedIsLoading ? (
-              <div className="card-body">Loading...</div>
-            ) : (
-              <div className="card-body">
-                <div className="card-text">{generated}</div>
-              </div>
-            )}
+        {
+          generated ? (
+            <div className="col-md-6">
+            <div className="card my-2">
+              <div className="card-header">AI-generated hint:</div>
+              {generatedIsLoading ? (
+                <div className="card-body">Loading...</div>
+              ) : (
+                <div className="card-body">
+                  <div className="card-text">{generated}</div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+          ) :
+          ( <div /> )
+        }
       </div>
     </>
   );

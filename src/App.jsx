@@ -55,20 +55,11 @@ function App() {
         </div>
       </div>
 
-      <div
-        className="container px-4 py-4 my-4 border border-dark rounded"
-        style={{ backgroundColor: "#f5f5f5" }}
-      >
-        <div className="row row-cols-1 align-items-md-center g-5 py-2">
-          <div className="col d-flex flex-column align-items-md-center gap-2">
-            <h2 className="py-2 border-bottom">Generative output</h2>
+
             <GroupTaskGenerativeDisplay
               groupedGenerativeResponse={groupedGenerativeResponse}
               groupedGenerativeIsLoading={groupedGenerativeIsLoading}
             />
-          </div>
-        </div>
-      </div>
 
       <div
         className="container px-4 py-4 my-4 border border-dark rounded"

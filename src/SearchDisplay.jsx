@@ -30,9 +30,13 @@ export default function SearchDisplay({
   } else {
     let genResponses;
     if (singleGenerativeResponse) {
-      genResponses = singleGenerativeResponse.data.Get.JeopardyQuestion.map(
-        (s) => s._additional.generate.singleResult,
-      );
+      try {
+        genResponses = singleGenerativeResponse.data.Get.JeopardyQuestion.map(
+          (s) => s._additional.generate.singleResult,
+        );
+      } catch {
+        genResponses = [];
+      }
     } else {
       genResponses = [];
     }

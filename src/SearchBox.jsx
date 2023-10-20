@@ -12,7 +12,7 @@ export default function SearchBox({
 }) {
   const [searchString, setSearchString] = useState("");
   const [generativePrompt, setGenerativePrompt] = useState(
-    "Write a tweet based on these results promoting playing an online trivia game at http://127.0.0.1:5173/",
+    "",
   );
 
   async function connectToWeaviate() {
@@ -33,14 +33,17 @@ export default function SearchBox({
       let baseQuery = client.graphql
         .get()
         .withClassName("JeopardyQuestion")
-        .withBm25({
-          query: queryString,
-          properties: ["question"],
-        })
         .withLimit(limit)
         .withFields(
           "question answer hasCategory {... on JeopardyCategory {title} }",
-        );
+        )
+
+        // Search method
+        .withBm25({  // Keyword search
+          query: queryString,
+          properties: ["question"],
+        })
+        // Let's try a vector search
 
       return baseQuery;
     } catch (error) {
@@ -60,10 +63,7 @@ export default function SearchBox({
 
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery
-      .withGenerate({
-        groupedTask: generativePrompt,
-        groupedProperties: ["question"],
-      })
+      // Can we add a grouped generative search (prompt: generativePrompt)
       .do();
 
     setGroupedGenerativeIsLoading(false);
@@ -76,10 +76,7 @@ export default function SearchBox({
 
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery
-      .withGenerate({
-        singlePrompt:
-          "Provide a hint for people answering: {question} where the right answer is {answer}",
-      })
+      // Can we provide hints for the users?
       .do();
 
     setSingleGenerativeIsLoading(false);
@@ -122,16 +119,18 @@ export default function SearchBox({
         }}
       />
 
-      <label className="text-body-secondary text-align-left mt-4">
-        And also, do this with the results...
-      </label>
-      <textarea
-        className="form-control"
-        name="GenerativeInput"
-        value={generativePrompt}
-        onChange={(e) => setGenerativePrompt(e.target.value)}
-        rows="2"
-      />
+      <div style={{ display: 'none'}}>
+        <label className="text-body-secondary text-align-left mt-4">
+          And also, do this with the results...
+        </label>
+        <textarea
+          className="form-control"
+          name="GenerativeInput"
+          value={generativePrompt}
+          onChange={(e) => setGenerativePrompt(e.target.value)}
+          rows="2"
+        />
+      </div>
 
       <div className="mb-5">
         <button
