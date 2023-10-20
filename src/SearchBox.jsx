@@ -149,10 +149,6 @@ export default function SearchBox({
           Let's go!
         </button>
       </div>
-
-      {/* Try AI search */}
-      {/* Add a filter */}
-      {/* Augment your data */}
     </>
   )
 }
