@@ -12,7 +12,7 @@ export default function SearchBox({
 }) {
   const [searchString, setSearchString] = useState("");
   const [generativePrompt, setGenerativePrompt] = useState(
-    "",
+    "Write a tweet with emojis using these facts promoting a trivia board game! Make up a name for the game.",
   );
 
   async function connectToWeaviate() {
@@ -38,7 +38,7 @@ export default function SearchBox({
           "question answer hasCategory {... on JeopardyCategory {title} }",
         )
 
-        // Search method
+        // TODO - Search method
         .withBm25({  // Keyword search
           query: queryString,
           properties: ["question"],
@@ -58,28 +58,32 @@ export default function SearchBox({
     return result;
   }
 
-  async function generateGroupedTask(queryString) {
-    setGroupedGenerativeIsLoading(true);
-
-    let baseQuery = await queryBuilder(queryString);
-    let result = await baseQuery
-      // Can we add a grouped generative search (prompt: generativePrompt)
-      .do();
-
-    setGroupedGenerativeIsLoading(false);
-
-    return result;
-  }
-
   async function generateSinglePrompt(queryString) {
+
     setSingleGenerativeIsLoading(true);
 
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery
-      // Can we provide hints for the users?
+      // TODO - Can we provide hints for the users?
+      // Suggested prompt: 'Provide a short hint for the user to help them answer {question}. The hint should lead them to {answer} without mentioning it.'
       .do();
 
     setSingleGenerativeIsLoading(false);
+
+    return result;
+  }
+
+
+  async function generateGroupedTask(queryString) {
+
+    setGroupedGenerativeIsLoading(true);
+
+    let baseQuery = await queryBuilder(queryString);
+    let result = await baseQuery
+      // TODO - Can we add a grouped generative search (prompt: generativePrompt, only use 'question')
+      .do();
+
+    setGroupedGenerativeIsLoading(false);
 
     return result;
   }
@@ -119,6 +123,8 @@ export default function SearchBox({
         }}
       />
 
+      {/* TODO - unhide div */}
+      {/* <div> */}
       <div style={{ display: 'none'}}>
         <label className="text-body-secondary text-align-left mt-4">
           And also, do this with the results...
