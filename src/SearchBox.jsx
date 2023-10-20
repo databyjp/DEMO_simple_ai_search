@@ -23,66 +23,41 @@ export default function SearchBox({
     return client
   };
 
-  async function mainSearch(queryString) {
+  const queryBuilder = async (queryString, limit=5) => {
 
     const client = await connectToWeaviate();
 
-    // ===== Perform a query =====
-    let result = await client.graphql
+    let baseQuery = await client.graphql
       .get()
       .withClassName('JeopardyQuestion')
-
-      // Keyword search
-      // .withBm25({
-      //   query: queryString,
-      //   properties: ['question']
-      // })
-
-      // Similarity search
-      .withNearText({
-        concepts: [queryString]
+      .withBm25({
+        query: queryString,
+        properties: ['question']
       })
+      .withLimit(limit)
+      .withFields('question answer hasCategory {... on JeopardyCategory {title} }')
 
-      // Additional parameters
-      .withLimit(5)
-      .withFields('question answer _additional {id} hasCategory {... on JeopardyCategory {title} }')
-      .do();
+    return baseQuery;
+  }
+
+  async function mainSearch(queryString) {
+
+    let baseQuery = await queryBuilder(queryString);
+    let result = await baseQuery.do();
 
     return result;
   };
 
-  async function generatePromo(queryString) {
+  async function generateGroupedTask(queryString) {
 
-    setGroupedGenerativeIsLoading(true); // Set loading to true when starting the data fetching
+    setGroupedGenerativeIsLoading(true);
 
-    const client = await connectToWeaviate();
-
-    // ===== Perform a query =====
-    let result = await client.graphql
-      .get()
-      .withClassName('JeopardyQuestion')
-
-      // Keyword search
-      // .withBm25({
-      //   query: queryString,
-      //   properties: ['question']
-      // })
-
-      // Similarity search
-      .withNearText({
-        concepts: [queryString]
-      })
-
-      // Add generative task
+    let baseQuery = await queryBuilder(queryString);
+    let result = await baseQuery
       .withGenerate({
-        // groupedTask: 'Write a tweet promoting playing this online trivia game, based on these results',
         groupedTask: generativePrompt,
         groupedProperties: ['question']
       })
-
-      // Additional parameters
-      .withLimit(5)
-      .withFields('question answer')
       .do();
 
     setGroupedGenerativeIsLoading(false);
@@ -92,34 +67,13 @@ export default function SearchBox({
 
   async function generateSinglePrompt(queryString) {
 
-    setSingleGenerativeIsLoading(true); // Set loading to true when starting the data fetching
+    setSingleGenerativeIsLoading(true);
 
-    const client = await connectToWeaviate();
-
-    // ===== Perform a query =====
-    let result = await client.graphql
-      .get()
-      .withClassName('JeopardyQuestion')
-
-      // Keyword search
-      // .withBm25({
-      //   query: queryString,
-      //   properties: ['question']
-      // })
-
-      // Similarity search
-      .withNearText({
-        concepts: [queryString]
-      })
-
-      // Add generative task
+    let baseQuery = await queryBuilder(queryString);
+    let result = await baseQuery
       .withGenerate({
         singlePrompt: 'Provide a hint for people answering: {question} where the right answer is {answer}',
       })
-
-      // Additional parameters
-      .withLimit(5)
-      .withFields('question answer')
       .do();
 
     setSingleGenerativeIsLoading(false);
@@ -134,8 +88,7 @@ export default function SearchBox({
       setSearchResults(r.data.Get['JeopardyQuestion']);
     });
 
-
-    let groupedResult = generatePromo(searchString);
+    let groupedResult = generateGroupedTask(searchString);
     groupedResult.then(r => {
       setGroupedGenerativeResponse(r);
     });

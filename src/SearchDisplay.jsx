@@ -13,13 +13,16 @@ export default function SearchDisplay({ searchResults, singleGenerativeResponse,
   } else if (searchResults.length == 0) {
     return (
       <>
-        <div className='border-secondary-subtle-2'>
-          No results found :(
+        <div className="card my-2">
+          <div className="card-body">
+            <div className="card-text" style={{ whiteSpace: 'pre-line' }}>
+              No results found :(
+            </div>
+          </div>
         </div>
       </>
     )
   } else {
-    console.log(`search display response: ${JSON.stringify(singleGenerativeResponse)}`);
 
     let genResponses;
     if (singleGenerativeResponse) {
@@ -33,10 +36,9 @@ export default function SearchDisplay({ searchResults, singleGenerativeResponse,
         <div className='border-secondary-subtle-2'>
           {searchResults.map((s, i) => (
             <QuestionCard
-              key={s._additional.id}
+              key={s.question}
               title={s.answer}
               body={s.question}
-              uuid={s._additional.id}
               category={s.hasCategory[0].title}
               generatedIsLoading={singleGenerativeIsLoading}
               generated={genResponses ? genResponses[i] : null }

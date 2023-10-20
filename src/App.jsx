@@ -66,9 +66,6 @@ function App() {
           <div className="card-header">
             Built with Weaviate <img src={weaviateLogo} width="30px" style={{ marginTop: '-5px' }}></img>
           </div>
-          {/* <div className="card-body">
-            <p className="card-text">Want to learn how? Check out the <a href="https://weaviate.io/developers/weaviate/quickstart">Weaviate documentation</a></p>
-          </div> */}
         </div>
       </div>
       <div className="container px-4 pb-5">

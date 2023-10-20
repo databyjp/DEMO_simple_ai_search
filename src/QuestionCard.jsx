@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import parse from 'html-react-parser';
 
-const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoading, generated}) => {
+const QuestionCard = ({title="", body="", category="", generatedIsLoading, generated}) => {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const toggleAnswer = (e) => {
