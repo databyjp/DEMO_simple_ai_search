@@ -51,6 +51,23 @@ export default function SearchBox({
     return result;
   };
 
+  // const baseQuery = client.graphql
+  // .get()
+  // .withClassName('JeopardyQuestion')
+
+  // // Keyword search
+  // // .withBm25({
+  // //   query: queryString,
+  // //   properties: ['question']
+  // // })
+
+  // // Similarity search
+  // .withNearText({
+  //   concepts: [queryString]
+  // })
+
+  // baseQuery.
+
   async function generatePromo(queryString) {
 
     setGroupedGenerativeIsLoading(true); // Set loading to true when starting the data fetching

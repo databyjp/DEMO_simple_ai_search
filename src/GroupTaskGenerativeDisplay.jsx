@@ -10,8 +10,16 @@ export default function GroupTaskGenerativeDisplay({ groupedGenerativeResponse, 
         </div>
       )
     } else {
+
       if (groupedGenerativeResponse.data.Get['JeopardyQuestion'].length > 0) {
         generatedText = groupedGenerativeResponse.data.Get['JeopardyQuestion'][0]['_additional']['generate']['groupedResult'];
+        try {
+          generatedText = JSON.parse(generatedText)
+        } catch (error) {
+          console.log(`Error parsing text: ${error}. Source data:`);
+          console.log(generatedText);
+        }
+
       } else {
         generatedText = 'Sorry, nothing here.';
       }
@@ -21,7 +29,7 @@ export default function GroupTaskGenerativeDisplay({ groupedGenerativeResponse, 
           <div className="card my-2">
             <div className="card-body">
               <div className="card-text" style={{ whiteSpace: 'pre-line' }}>
-                {JSON.parse(generatedText)}
+                {generatedText}
               </div>
             </div>
           </div>
