@@ -33,7 +33,7 @@ const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoadi
   return (
     <>
       <div class="row my-4 align-items-start">
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div className="card my-2">
             <div className="card-body">
               <div className="card-text">
@@ -58,7 +58,7 @@ const QuestionCard = ({title="", body="", uuid="", category="", generatedIsLoadi
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div className="card my-2">
             <div className="card-header">
             AI-generated hint:

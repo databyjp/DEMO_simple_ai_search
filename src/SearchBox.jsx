@@ -23,7 +23,7 @@ export default function SearchBox({
     return client
   };
 
-  async function keywordSearch(queryString) {
+  async function mainSearch(queryString) {
 
     const client = await connectToWeaviate();
 
@@ -31,15 +31,22 @@ export default function SearchBox({
     let result = await client.graphql
       .get()
       .withClassName('JeopardyQuestion')
-      .withBm25({
-        query: queryString,
-        properties: ['question']
+
+      // Keyword search
+      // .withBm25({
+      //   query: queryString,
+      //   properties: ['question']
+      // })
+
+      // Similarity search
+      .withNearText({
+        concepts: [queryString]
       })
+
+      // Additional parameters
       .withLimit(5)
       .withFields('question answer _additional {id} hasCategory {... on JeopardyCategory {title} }')
       .do();
-    console.log('BM25 results:');
-    console.log(result);
 
     return result;
   };
@@ -54,15 +61,26 @@ export default function SearchBox({
     let result = await client.graphql
       .get()
       .withClassName('JeopardyQuestion')
-      .withBm25({
-        query: queryString,
-        properties: ['question']
+
+      // Keyword search
+      // .withBm25({
+      //   query: queryString,
+      //   properties: ['question']
+      // })
+
+      // Similarity search
+      .withNearText({
+        concepts: [queryString]
       })
+
+      // Add generative task
       .withGenerate({
         // groupedTask: 'Write a tweet promoting playing this online trivia game, based on these results',
         groupedTask: generativePrompt,
         groupedProperties: ['question']
       })
+
+      // Additional parameters
       .withLimit(5)
       .withFields('question answer')
       .do();
@@ -82,13 +100,24 @@ export default function SearchBox({
     let result = await client.graphql
       .get()
       .withClassName('JeopardyQuestion')
-      .withBm25({
-        query: queryString,
-        properties: ['question']
+
+      // Keyword search
+      // .withBm25({
+      //   query: queryString,
+      //   properties: ['question']
+      // })
+
+      // Similarity search
+      .withNearText({
+        concepts: [queryString]
       })
+
+      // Add generative task
       .withGenerate({
         singlePrompt: 'Provide a hint for people answering: {question} where the right answer is {answer}',
       })
+
+      // Additional parameters
       .withLimit(5)
       .withFields('question answer')
       .do();
@@ -100,9 +129,7 @@ export default function SearchBox({
 
   const clickHandler = async () => {
 
-    console.log(`Search string: ${searchString}`);
-
-    let result = keywordSearch(searchString);
+    let result = mainSearch(searchString);
     result.then(r => {
       setSearchResults(r.data.Get['JeopardyQuestion']);
     });
@@ -136,12 +163,12 @@ export default function SearchBox({
       />
 
       <label className="text-body-secondary text-align-left mt-4">And also, do this with the results...</label>
-      <input
-        type="text"
+      <textarea
         className="form-control"
         name="GenerativeInput"
         value={generativePrompt}
         onChange={(e) => setGenerativePrompt(e.target.value)}
+        rows="2"
       />
 
       <div className="mb-5">

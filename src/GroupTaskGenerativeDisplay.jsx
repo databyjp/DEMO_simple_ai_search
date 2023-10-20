@@ -21,7 +21,7 @@ export default function GroupTaskGenerativeDisplay({ groupedGenerativeResponse, 
           <div className="card my-2">
             <div className="card-body">
               <div className="card-text" style={{ whiteSpace: 'pre-line' }}>
-                {generatedText}
+                {JSON.parse(generatedText)}
               </div>
             </div>
           </div>
