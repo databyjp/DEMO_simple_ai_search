@@ -1,3 +1,5 @@
+"use strict";
+
 import QuestionCard from './QuestionCard';
 
 export default function SearchDisplay({ searchResults, singleGenerativeResponse, singleGenerativeIsLoading }) {

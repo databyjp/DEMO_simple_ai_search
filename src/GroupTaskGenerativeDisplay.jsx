@@ -1,3 +1,5 @@
+"use strict";
+
 export default function GroupTaskGenerativeDisplay({ groupedGenerativeResponse, groupedGenerativeIsLoading }) {
 
   let generatedText;

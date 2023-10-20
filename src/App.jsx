@@ -1,3 +1,5 @@
+"use strict";
+
 import { useState } from 'react';
 import weaviateLogo from './assets/weaviate-logo-light-transparent-200.png';
 import heroBg from './assets/bg.png';

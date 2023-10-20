@@ -1,3 +1,5 @@
+"use strict";
+
 import { useState } from 'react';
 import weaviate from 'weaviate-ts-client';
 
@@ -24,20 +26,23 @@ export default function SearchBox({
   };
 
   const queryBuilder = async (queryString, limit=5) => {
+    try {
+      const client = await connectToWeaviate();
 
-    const client = await connectToWeaviate();
+      let baseQuery = client.graphql
+        .get()
+        .withClassName('JeopardyQuestion')
+        .withBm25({
+          query: queryString,
+          properties: ['question']
+        })
+        .withLimit(limit)
+        .withFields('question answer hasCategory {... on JeopardyCategory {title} }')
 
-    let baseQuery = await client.graphql
-      .get()
-      .withClassName('JeopardyQuestion')
-      .withBm25({
-        query: queryString,
-        properties: ['question']
-      })
-      .withLimit(limit)
-      .withFields('question answer hasCategory {... on JeopardyCategory {title} }')
-
-    return baseQuery;
+      return baseQuery;
+    } catch (error) {
+      console.error("Error occurred while building the base query: ", error);
+    }
   }
 
   async function mainSearch(queryString) {
