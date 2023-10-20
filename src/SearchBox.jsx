@@ -12,7 +12,7 @@ export default function SearchBox({
 }) {
   const [searchString, setSearchString] = useState("");
   const [generativePrompt, setGenerativePrompt] = useState(
-    "Write a tweet based on these results promoting playing an online trivia game at http://127.0.0.1:5173/",
+    "Write a tweet with emojis using these facts promoting a trivia board game! Make up a name for the game.",
   );
 
   async function connectToWeaviate() {
@@ -27,27 +27,29 @@ export default function SearchBox({
   }
 
   const queryBuilder = async (queryString, limit = 5) => {
-    try {
-      const client = await connectToWeaviate();
+    // This will build a base query for re-use
+    const client = await connectToWeaviate();
 
-      let baseQuery = client.graphql
-        .get()
-        .withClassName("JeopardyQuestion")
-        .withBm25({
-          query: queryString,
-          properties: ["question"],
-        })
-        .withLimit(limit)
-        .withFields(
-          "question answer hasCategory {... on JeopardyCategory {title} }",
-        );
+    let baseQuery = client.graphql
+      .get()
+      .withClassName("JeopardyQuestion")
+      .withLimit(limit)
+      .withFields(
+        "question answer hasCategory {... on JeopardyCategory {title} }",
+      )
 
-      return baseQuery;
-    } catch (error) {
-      console.error("Error occurred while building the base query: ", error);
-    }
+      // TODO - Search method
+      // Keyword search
+      .withBm25({
+        query: queryString,
+        properties: ["question"],
+      });
+    // Let's try a vector search instead
+
+    return baseQuery;
   };
 
+  // The search function
   async function mainSearch(queryString) {
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery.do();
@@ -55,34 +57,31 @@ export default function SearchBox({
     return result;
   }
 
-  async function generateGroupedTask(queryString) {
-    setGroupedGenerativeIsLoading(true);
-
-    let baseQuery = await queryBuilder(queryString);
-    let result = await baseQuery
-      .withGenerate({
-        groupedTask: generativePrompt,
-        groupedProperties: ["question"],
-      })
-      .do();
-
-    setGroupedGenerativeIsLoading(false);
-
-    return result;
-  }
-
+  // Generate hints
   async function generateSinglePrompt(queryString) {
     setSingleGenerativeIsLoading(true);
 
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery
-      .withGenerate({
-        singlePrompt:
-          "Provide a hint for people answering: {question} where the right answer is {answer}",
-      })
+      // TODO - Trivia can be a bit difficult - can we provide hints?
+      // Suggested prompt: 'Provide a short hint for the user to help them answer {question}. The hint should lead them to {answer} without mentioning it.'
       .do();
 
     setSingleGenerativeIsLoading(false);
+
+    return result;
+  }
+
+  // Generate additional output
+  async function generateGroupedTask(queryString) {
+    setGroupedGenerativeIsLoading(true);
+
+    let baseQuery = await queryBuilder(queryString);
+    let result = await baseQuery
+      // TODO - Can we add a grouped generative search (prompt: generativePrompt, only use 'question')
+      .do();
+
+    setGroupedGenerativeIsLoading(false);
 
     return result;
   }
@@ -122,16 +121,20 @@ export default function SearchBox({
         }}
       />
 
-      <label className="text-body-secondary text-align-left mt-4">
-        And also, do this with the results...
-      </label>
-      <textarea
-        className="form-control"
-        name="GenerativeInput"
-        value={generativePrompt}
-        onChange={(e) => setGenerativePrompt(e.target.value)}
-        rows="2"
-      />
+      {/* TODO - unhide div */}
+      {/* <div> */}
+      <div style={{ display: "none" }}>
+        <label className="text-body-secondary text-align-left mt-4">
+          And also, do this with the results...
+        </label>
+        <textarea
+          className="form-control"
+          name="GenerativeInput"
+          value={generativePrompt}
+          onChange={(e) => setGenerativePrompt(e.target.value)}
+          rows="2"
+        />
+      </div>
 
       <div className="mb-5">
         <button
