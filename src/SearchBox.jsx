@@ -27,30 +27,29 @@ export default function SearchBox({
   }
 
   const queryBuilder = async (queryString, limit = 5) => {
-    try {
-      const client = await connectToWeaviate();
+    // This will build a base query for re-use
+    const client = await connectToWeaviate();
 
-      let baseQuery = client.graphql
-        .get()
-        .withClassName("JeopardyQuestion")
-        .withLimit(limit)
-        .withFields(
-          "question answer hasCategory {... on JeopardyCategory {title} }",
-        )
+    let baseQuery = client.graphql
+      .get()
+      .withClassName("JeopardyQuestion")
+      .withLimit(limit)
+      .withFields(
+        "question answer hasCategory {... on JeopardyCategory {title} }",
+      )
 
-        // TODO - Search method
-        .withBm25({  // Keyword search
-          query: queryString,
-          properties: ["question"],
-        })
-        // Let's try a vector search
+      // TODO - Search method
+      // Keyword search
+      .withBm25({
+        query: queryString,
+        properties: ["question"],
+      });
+    // Let's try a vector search instead
 
-      return baseQuery;
-    } catch (error) {
-      console.error("Error occurred while building the base query: ", error);
-    }
+    return baseQuery;
   };
 
+  // The search function
   async function mainSearch(queryString) {
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery.do();
@@ -58,13 +57,13 @@ export default function SearchBox({
     return result;
   }
 
+  // Generate hints
   async function generateSinglePrompt(queryString) {
-
     setSingleGenerativeIsLoading(true);
 
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery
-      // TODO - Can we provide hints for the users?
+      // TODO - Trivia can be a bit difficult - can we provide hints?
       // Suggested prompt: 'Provide a short hint for the user to help them answer {question}. The hint should lead them to {answer} without mentioning it.'
       .do();
 
@@ -73,9 +72,8 @@ export default function SearchBox({
     return result;
   }
 
-
+  // Generate additional output
   async function generateGroupedTask(queryString) {
-
     setGroupedGenerativeIsLoading(true);
 
     let baseQuery = await queryBuilder(queryString);
@@ -125,7 +123,7 @@ export default function SearchBox({
 
       {/* TODO - unhide div */}
       {/* <div> */}
-      <div style={{ display: 'none'}}>
+      <div style={{ display: "none" }}>
         <label className="text-body-secondary text-align-left mt-4">
           And also, do this with the results...
         </label>

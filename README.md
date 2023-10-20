@@ -24,6 +24,8 @@ Create a file called `.env` in the root of the project and add your OpenAI API k
 VITE_OPENAI_APIKEY=<your-api-key>
 ```
 
+You can get an API key from the OpenAI site (https://platform.openai.com).
+
 4. Run the app
 
 ```bash
@@ -31,3 +33,13 @@ npm run dev
 ```
 
 5. Open the app in your browser at http://127.0.0.1:5173/
+
+## What next?
+
+### Other demo apps
+
+For another amazing demo app, check out [Verba](https://github.com/weaviate/Verba)!
+
+### Learn more about Weaviate
+
+Check out the [Quickstart guide](https://weaviate.io/developers/weaviate/quickstart) to get started with Weaviate in just 20 or so minutes.

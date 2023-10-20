@@ -55,11 +55,10 @@ function App() {
         </div>
       </div>
 
-
-            <GroupTaskGenerativeDisplay
-              groupedGenerativeResponse={groupedGenerativeResponse}
-              groupedGenerativeIsLoading={groupedGenerativeIsLoading}
-            />
+      <GroupTaskGenerativeDisplay
+        groupedGenerativeResponse={groupedGenerativeResponse}
+        groupedGenerativeIsLoading={groupedGenerativeIsLoading}
+      />
 
       <div
         className="container px-4 py-4 my-4 border border-dark rounded"

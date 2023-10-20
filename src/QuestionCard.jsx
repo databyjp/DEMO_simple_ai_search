@@ -85,27 +85,19 @@ const QuestionCard = ({
             </div>
           </div>
         </div>
-        {
-          generatedIsLoading ? (
-            <div className="col-md-6">
-              Loading AI-generated hint...
-            </div>
-          ) :
-          ( null )
-        }
-        {
-          generated ? (
-            <div className="col-md-6">
+        {generatedIsLoading ? (
+          <div className="col-md-6">Loading AI-generated hint...</div>
+        ) : null}
+        {generated ? (
+          <div className="col-md-6">
             <div className="card my-2">
               <div className="card-header">AI-generated hint:</div>
-                <div className="card-body">
-                  <div className="card-text">{generated}</div>
-                </div>
+              <div className="card-body">
+                <div className="card-text">{generated}</div>
+              </div>
             </div>
           </div>
-          ) :
-          ( null )
-        }
+        ) : null}
       </div>
     </>
   );
