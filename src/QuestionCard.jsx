@@ -41,8 +41,6 @@ const QuestionCard = ({
   }
 
   function cosineSimilarity(vecA, vecB) {
-    console.log(vecA)
-    console.log(vecB)
     const dotProductAB = dotProduct(vecA, vecB);
     const magnitudeA = magnitude(vecA);
     const magnitudeB = magnitude(vecB);
@@ -72,13 +70,12 @@ const QuestionCard = ({
   }
 
   const clickHandler = async () => {
-    // setAnswerAnalysis(answerAttempt);
 
     setAnswerAnalysis('loading...');
 
     axios.post('https://api.openai.com/v1/completions', {
       model: 'gpt-3.5-turbo-instruct',
-      prompt: `Answer very briefly whether ${answerAttempt} is acceptable to the Jeopardy! question: ${question}. Keep the explanation very brief, to a sentence or two sentences maximum.`,
+      prompt: `Answer very briefly whether ${answerAttempt} will be deemed correct against the provided answer of ${answer} to the Jeopardy! question: ${question}. Keep the explanation very brief, to two sentences to four sentences maximum.`,
       max_tokens: 200,
       temperature: 0
     }, {
@@ -88,16 +85,13 @@ const QuestionCard = ({
       }
     })
     .then(response => {
-      console.log(response.data);
       setAnswerAnalysis(response.data.choices[0].text)
     })
     .catch(error => console.error('Error:', error));
 
     Promise.all([getEmbedding(answerAttempt), getEmbedding(answer)])
     .then(([userAnswerEmbedding, correctAnswerEmbedding]) => {
-      console.log(userAnswerEmbedding, correctAnswerEmbedding);
       const cosDist = 1 - cosineSimilarity(userAnswerEmbedding, correctAnswerEmbedding);
-      console.log(`Cosine distance: ${cosDist}`);
       setAnswerDistance(cosDist);
     })
     .catch(error => console.error('Error:', error));
