@@ -40,11 +40,14 @@ export default function SearchBox({
 
       // TODO - Search method
       // Keyword search
-      .withBm25({
-        query: queryString,
-        properties: ["question"],
-      });
+      // .withBm25({
+      //   query: queryString,
+      //   properties: ["question"],
+      // });
     // Let's try a vector search instead
+    .withNearText({
+      concepts: [queryString]
+    })
 
     return baseQuery;
   };
@@ -65,6 +68,9 @@ export default function SearchBox({
     let result = await baseQuery
       // TODO - Trivia can be a bit difficult - can we provide hints?
       // Suggested prompt: 'Provide a short hint for the user to help them answer {question}. The hint should lead them to {answer} without mentioning it.'
+      .withGenerate({
+        singlePrompt: 'Provide a short hint for the user to help them answer {question}. The hint should lead them to {answer} without mentioning it.'
+      })
       .do();
 
     setSingleGenerativeIsLoading(false);
@@ -79,6 +85,10 @@ export default function SearchBox({
     let baseQuery = await queryBuilder(queryString);
     let result = await baseQuery
       // TODO - Can we add a grouped generative search (prompt: generativePrompt, only use 'question')
+      .withGenerate({
+        groupedTask: generativePrompt,
+        groupedProperties: ['question']
+      })
       .do();
 
     setGroupedGenerativeIsLoading(false);
@@ -122,8 +132,8 @@ export default function SearchBox({
       />
 
       {/* TODO - unhide div */}
-      {/* <div> */}
-      <div style={{ display: "none" }}>
+      <div>
+      {/* <div style={{ display: "none" }}> */}
         <label className="text-body-secondary text-align-left mt-4">
           And also, do this with the results...
         </label>

@@ -47,8 +47,8 @@ export default function SearchDisplay({
           {searchResults.map((s, i) => (
             <QuestionCard
               key={s.question}
-              title={s.answer}
-              body={s.question}
+              answer={s.answer}
+              question={s.question}
               category={s.hasCategory[0].title}
               generatedIsLoading={singleGenerativeIsLoading}
               generated={genResponses ? genResponses[i] : null}
