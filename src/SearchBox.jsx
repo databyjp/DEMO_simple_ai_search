@@ -149,7 +149,7 @@ export default function SearchBox({
       <div className="mb-5">
         <button
           type="button"
-          className="btn btn-primary btn"
+          className="btn btn-primary"
           onClick={clickHandler}
         >
           Let's go!

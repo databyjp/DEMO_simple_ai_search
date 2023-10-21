@@ -153,7 +153,7 @@ const QuestionCard = ({
                 <div className="card-body">
                   <div className="card-text">
                     <label className="text-body-secondary text-align-left">
-                      What do you think?
+                      Can you answer the question?
                     </label>
                     <input
                       type="text"
@@ -167,17 +167,25 @@ const QuestionCard = ({
                         }
                       }}
                     />
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm my-2"
+                      onClick={clickHandler}
+                    >
+                      Check answer
+                    </button>
                   </div>
                   {
                     answerDistance ? (
-                      <div className="my-2">Vector distance to provided answer: {answerDistance.toFixed(4)}</div>
+                      <div className="my-2">
+                        <small>Vector distance vs correct answer: <span class="badge rounded-pill bg-light text-dark"> {answerDistance.toFixed(4)} </span></small></div>
                     ) : (
                       null
                     )
                   }
                   {answerAnalysis.length > 0 ? (
-                    <div>
-                      {answerAnalysis}
+                    <div className="text-secondary">
+                      <small>{answerAnalysis}</small>
                     </div>
                   ) : (
                     null
