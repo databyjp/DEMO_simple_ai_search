@@ -75,7 +75,7 @@ const QuestionCard = ({
 
     axios.post('https://api.openai.com/v1/completions', {
       model: 'gpt-3.5-turbo-instruct',
-      prompt: `Answer very briefly whether ${answerAttempt} will be deemed correct against the provided answer of ${answer} to the Jeopardy! question: ${question}. Keep the explanation very brief, to two sentences to four sentences maximum.`,
+      prompt: `Answer very briefly whether ${answerAttempt} will be deemed correct against the provided answer of ${answer} to the Jeopardy! question: ${question} in "${category}" category. Keep the explanation very brief, to two sentences to four sentences maximum.`,
       max_tokens: 200,
       temperature: 0
     }, {
@@ -146,10 +146,10 @@ const QuestionCard = ({
                     style={{ maxWidth: "100%" }}
                   />
                 )}
-                <p className="card-text">Question: {parse(content, options)}</p>
+                <p className="card-text"><small>Question:</small> <strong>{parse(content, options)}</strong></p>
               </div>
 
-              <div className="card my-2">
+              <div className="card my-2" style={{ backgroundColor: '#f5f5f5' }}>
                 <div className="card-body">
                   <div className="card-text">
                     <label className="text-body-secondary text-align-left">

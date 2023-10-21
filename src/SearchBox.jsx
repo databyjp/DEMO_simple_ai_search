@@ -116,7 +116,7 @@ export default function SearchBox({
   return (
     <>
       <label className="text-body-secondary text-align-left">
-        Find questions containing...
+        Find questions about...
       </label>
       <input
         type="text"
