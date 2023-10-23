@@ -15,9 +15,9 @@ export default function SearchBox({
     "Write a tweet with emojis using these facts promoting a trivia board game! Make up a name for the game.",
   );
 
-  async function connectToWeaviate() {
+  function connectToWeaviate() {
     // ===== Connect to the vector database (Weaviate instance) =====
-    const client = await weaviate.client({
+    const client = weaviate.client({
       scheme: "https",
       host: "edu-demo.weaviate.network",
       apiKey: new weaviate.ApiKey("learn-weaviate"),
