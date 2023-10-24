@@ -34,7 +34,7 @@ npm run dev
 
 5. Open the app in your browser at http://127.0.0.1:5173/
 
-## What next?
+## Further resources
 
 ### Other demo apps
 
@@ -43,3 +43,9 @@ For another amazing demo app, check out [Verba](https://github.com/weaviate/Verb
 ### Learn more about Weaviate
 
 Check out the [Quickstart guide](https://weaviate.io/developers/weaviate/quickstart) to get started with Weaviate in just 20 or so minutes.
+
+### How do vectors work?
+
+This blog post explains how [vectorization works](https://weaviate.io/blog/vector-embeddings-explained). It's a great read!
+
+We also have [this app](https://huggingface.co/spaces/jphwang/colorful_vectors) to visually explain how vectorization can represent meaning and similarity.
