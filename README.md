@@ -6,6 +6,19 @@ The app uses the [Weaviate Javascript/Typescript client](https://www.npmjs.com/p
 
 It connects to a Weaviate instance running on the cloud (at https://edu-demo.weaviate.network), with a read-only Weaviate API key that allows you to perform search queries.
 
+## Key components
+
+The bulk of the `AI` functionality is implemented in the `SearchBox` component.
+
+- `connectToWeaviate` is a helper function that creates a Weaviate client and connects to the Weaviate instance.
+- `queryBuilder` is a helper function that builds the base query, upon which the search query can be built.
+- The vector search functionality is implemented via the `mainSearch` function.
+- The RAG (retrieval augmented generation) functionality is implemented via the `generateSinglePrompt` and `generateGroupedTask` purposes.
+
+For demonstration purposes, the `QuestionCard` component implements some additional RAG functionality and vector distance calculation, by directly leveraging the OpenAI API. Note that in the `SearchBox` component, similar functionalities are abstracted and implemented via the Weaviate API.
+
+
+
 ## How to run
 
 1. Clone this repo
