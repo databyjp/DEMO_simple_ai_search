@@ -1,6 +1,6 @@
 # Weaviate DEMO - AI search app
 
-This is a minimal demo app to show how to use Weaviate in a React app to perform AI-powered search.
+This is a demo app to show how you can add Weaviate to a React app to enable AI-powered search.
 
 The app uses the [Weaviate Javascript/Typescript client](https://www.npmjs.com/package/weaviate-ts-client), and the [OpenAI API](https://beta.openai.com/).
 
